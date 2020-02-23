@@ -17,6 +17,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import moment from 'moment';
+import { Divider } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -35,6 +36,12 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
+  },
+  inline: {
+    fontSize: '12px',
+  },
+  even: {
+    background: 'rgba(0, 0, 0, 0.07)',
   },
 }));
 
@@ -55,8 +62,7 @@ export default function App() {
       try {
         const result = await Axios(url);
         setData(result.data);
-        const time = result.data.hits[0].created_at;
-        console.log(moment(time).format('DD-MM-YYYY'));
+        console.log(result.data);
       } catch (error) {
         setIsError(true);
       }
@@ -113,24 +119,19 @@ export default function App() {
                   <Grid item xs={12}>
                     <div className={classes.demo}>
                       <List>
-                        {data.hits.map(item => (
+                        {data.hits.map((item, index) => (
                           <ListItem
                             key={`sto-${Math.random() * 999}-${Math.random() *
                               999}`}
                             button
-                            component="a"
-                            href={item.url}
+                            className={index % 2 === 0 ? classes.even : null}
                           >
                             <ListItemText
                               primary={
                                 // eslint-disable-next-line react/jsx-wrap-multilines
                                 <>
-                                  <Typography
-                                    // variant="body2"
-                                    color="textPrimary"
-                                    noWrap
-                                  >
-                                    {item.title}
+                                  <Typography color="textPrimary" noWrap>
+                                    <a href={item.url}>{item.title}</a>
                                   </Typography>
                                 </>
                               }
@@ -143,12 +144,24 @@ export default function App() {
                                     className={classes.inline}
                                     color="textPrimary"
                                   >
-                                    {moment(item.created_at).format(
-                                      'DD-MM-YYYY',
-                                    )}
+                                    <a
+                                      href={`https://news.ycombinator.com/item?id=${item.objectID}`}
+                                    >
+                                      {`${item.points} points`}
+                                    </a>
+                                    {' - '}
+                                    <a
+                                      href={`https://news.ycombinator.com/user?id=${item.author}`}
+                                    >
+                                      {item.author}
+                                    </a>
+                                    {' - '}
+                                    <a
+                                      href={`https://news.ycombinator.com/item?id=${item.objectID}`}
+                                    >
+                                      {`${item.num_comments} comments`}
+                                    </a>
                                   </Typography>
-                                  {' - '}
-                                  {item.author}
                                 </>
                               }
                             />
