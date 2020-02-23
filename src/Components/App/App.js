@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import './App.css';
+import Axios from 'axios';
+/* MUI */
 import Container from '@material-ui/core/Container';
-// import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Axios from 'axios';
-
+/* Components */
 import Header from '../Header/Header';
 import SearchInput from '../SearchInput/SearchInput';
 import ArticleList from '../ArticleList/ArticleList';
@@ -38,28 +38,47 @@ $.ajax('http://opengraph.io/api/1.0/site/http%3A%2F%2Fwww.washingtontimes.com%2F
   });
   */
 
+const dataFetchReducer = (state, action) => {
+  switch (action.type) {
+    case 'FETCH_INIT':
+      return { ...state, isLoading: true, isError: false };
+    case 'FETCH_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        data: action.payload,
+      };
+    case 'FETCH_FAILURE':
+      return { ...state, isLoading: false, isError: true };
+    default:
+      throw new Error();
+  }
+};
+
 const useDataApi = (initialUrl, initialData) => {
-  const [data, setData] = useState(initialData);
   const [url, setUrl] = useState(initialUrl);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+
+  const [state, dispatch] = useReducer(dataFetchReducer, {
+    isLoading: false,
+    isError: false,
+    data: initialData,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsError(false);
-      setIsLoading(true);
+      dispatch({ type: 'FETCH_INIT' });
       try {
         const result = await Axios(url);
-        setData(result.data);
+        dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
       } catch (error) {
-        setIsError(true);
+        dispatch({ type: 'FETCH_FAILURE' });
       }
-      setIsLoading(false);
     };
     fetchData();
   }, [url]);
 
-  return [{ data, isLoading, isError }, setUrl];
+  return [state, setUrl];
 };
 
 export default function App() {
