@@ -33,6 +33,7 @@ const useDataApi = (initialUrl, initialData) => {
       dispatch({ type: 'FETCH_INIT' });
       try {
         const result = await Axios(url);
+        console.log(result.data);
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
       } catch (error) {
         dispatch({ type: 'FETCH_FAILURE' });

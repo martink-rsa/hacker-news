@@ -1,36 +1,30 @@
-# Project Title
+# HackerNews Feed (Unofficial)
 
-One Paragraph of project description goes here
+A HackerNews feed from the HackerNews API made in React with Material-UI.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+Simply clone the repo or copy the files to your computer.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+None
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+Step 1: Install the dependencies
 
 ```
-Give the example
+npm install
 ```
 
-And repeat
+Start the server
 
 ```
-until finished
+npm start
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+Simply add in a search term and press enter for the search to take place. It will default to a query of 'React'.
 
 ## Deployment
 
@@ -39,6 +33,8 @@ Add additional notes about how to deploy this on a live system
 ## Built With
 
 - [React](https://reactjs.org/) - User interface library
+- [Material-UI](https://reactjs.org/) - User interface styling library
+- [Moment.js](https://momentjs.com/) - Date/time parser
 
 ## License
 
@@ -46,6 +42,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-- Hat tip to anyone whose code was used
-- Inspiration
-- etc
+- Mr Robin Wieruch and his [article on fetching data with React Hooks](https://www.robinwieruch.de/react-hooks-fetch-data)

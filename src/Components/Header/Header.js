@@ -7,14 +7,13 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Switch from '@material-ui/core/Switch';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
   },
   title: {
     flexGrow: 1,
   },
-  // switchDark: { marginRight: theme.spacing(2) },
 }));
 
 export default function Header(props) {

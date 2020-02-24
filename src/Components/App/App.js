@@ -55,6 +55,7 @@ export default function App() {
 
   const theme = React.useMemo(
     () =>
+      // eslint-disable-next-line implicit-arrow-linebreak
       createMuiTheme({
         palette: {
           type: darkMode ? 'dark' : 'light',
@@ -94,7 +95,9 @@ export default function App() {
       />
       <Container maxWidth="md">
         <Grid container spacing={3}>
-          <Grid item xs={12}></Grid>
+          <Grid item xs={12}>
+            {null}
+          </Grid>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               <SearchInput
