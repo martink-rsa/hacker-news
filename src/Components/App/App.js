@@ -27,7 +27,6 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     padding: theme.spacing(2),
     textAlign: 'center',
-    // color: theme.palette.text.secondary,
   },
   inline: {
     fontSize: '12px',
