@@ -1,25 +1,29 @@
-import { red } from '@material-ui/core/colors';
+/* import { red } from '@material-ui/core/colors';
 import { createMuiTheme } from '@material-ui/core/styles';
-
+import lightGreen from '@material-ui/core/colors/lightGreen';
+import blueGrey from '@material-ui/core/colors/blueGrey'; */
 // A custom theme for this app
-const theme = createMuiTheme({
+
+/* const theme = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
       main: '#61dafb',
       light: '#61dafb',
       dark: '#21a1c4',
+      contrastText: '#000000',
     },
     secondary: {
       main: '#b5ecfb',
       light: '#61dafb',
       dark: '#21a1c4',
+      contrastText: '#000000',
     },
     error: {
       main: red.A400,
     },
     background: {
-      default: '#282c34',
+      default: '#313C4C',
     },
   },
   overrides: {
@@ -27,7 +31,7 @@ const theme = createMuiTheme({
       root: {
         padding: '0px 20px',
         margin: '20px 0',
-        backgroundColor: 'white', // 5d737e
+        // backgroundColor: 'rgb(247, 249, 248)', // 5d737e
       },
     },
     MuiButton: {
@@ -36,5 +40,5 @@ const theme = createMuiTheme({
       },
     },
   },
-});
-export default theme;
+}); */
+/* export default theme; */

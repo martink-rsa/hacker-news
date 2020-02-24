@@ -1,72 +1,73 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import moment from 'moment';
+// MUI
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import { Divider } from '@material-ui/core';
+import Link from '@material-ui/core/Link';
 
-const useStyles = makeStyles(theme => ({
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
+const useStyles = makeStyles(() => ({
+  even: {
+    background: 'rgba(0, 0, 0, 0.07)',
   },
 }));
 
 export default function ArticleList(props) {
   const classes = useStyles();
   const { data } = props;
-
   return (
     <List>
       {data.hits.map((item, index) => (
         <ListItem
           key={`sto-${Math.random() * 999}-${Math.random() * 999}`}
-          button
           className={index % 2 === 0 ? classes.even : null}
         >
           <ListItemText
             primary={
               // eslint-disable-next-line react/jsx-wrap-multilines
               <>
-                <Typography color="textPrimary" noWrap>
-                  <a href={item.url}>{item.title}</a>
+                <Typography noWrap>
+                  <Link href={item.url} color="textPrimary">
+                    {item.title === null ? 'No title' : item.title}
+                  </Link>
                 </Typography>
               </>
             }
             secondary={
               // eslint-disable-next-line react/jsx-wrap-multilines
               <>
-                <Typography
-                  component="span"
-                  variant="body2"
-                  className={classes.inline}
-                  color="textPrimary"
+                <Link
+                  color="textSecondary"
+                  href={`https://news.ycombinator.com/item?id=${item.objectID}`}
                 >
-                  <a
-                    href={`https://news.ycombinator.com/item?id=${item.objectID}`}
-                  >
-                    {`${item.points} points`}
-                  </a>
-                  {' - '}
-                  <a
-                    href={`https://news.ycombinator.com/user?id=${item.author}`}
-                  >
-                    {item.author}
-                  </a>
-                  {' - '}
-                  <a
-                    href={`https://news.ycombinator.com/item?id=${item.objectID}`}
-                  >
-                    {item.num_comments === null
-                      ? '0 comments'
-                      : `${item.num_comments} comments`}
-                  </a>
-                </Typography>
+                  {moment(item.created_at).fromNow()}
+                </Link>
+                {' - '}
+                <Link
+                  color="textSecondary"
+                  href={`https://news.ycombinator.com/item?id=${item.objectID}`}
+                >
+                  {`${item.points} points`}
+                </Link>
+                {' - '}
+                <Link
+                  color="textSecondary"
+                  href={`https://news.ycombinator.com/user?id=${item.author}`}
+                >
+                  {item.author}
+                </Link>
+                {' - '}
+                <Link
+                  color="textSecondary"
+                  href={`https://news.ycombinator.com/item?id=${item.objectID}`}
+                >
+                  {item.num_comments === null
+                    ? '0 comments'
+                    : `${item.num_comments} comments`}
+                </Link>
               </>
             }
           />
@@ -75,3 +76,9 @@ export default function ArticleList(props) {
     </List>
   );
 }
+
+ArticleList.propTypes = {
+  data: PropTypes.shape({
+    hits: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
+};
