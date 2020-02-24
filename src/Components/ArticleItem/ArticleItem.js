@@ -67,7 +67,6 @@ export default function ArticleItem(props) {
                 href={`https://news.ycombinator.com/item?id=${itemID}`}
               >
                 {points === null ? '0' : `${points}`}
-                {console.log(points)}
                 {points === 1 ? ' point - ' : ' points - '}
               </Link>
             ) : null}
@@ -107,5 +106,6 @@ ArticleItem.propTypes = {
   points: PropTypes.number,
   author: PropTypes.string.isRequired,
   comments: PropTypes.number,
+  isStory: PropTypes.bool.isRequired,
   differentBG: PropTypes.bool.isRequired,
 };

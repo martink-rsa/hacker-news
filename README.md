@@ -2,6 +2,10 @@
 
 A HackerNews feed from the HackerNews API made in React with Material-UI.
 
+## Notes regarding project
+
+I unfortunately only become aware of different post types, such as polls, towards the end of the project. I therefore did not cater for them. Polls will result in an item without a title. This is not a complex fix and will be dealt with once the project is revised. See [issues](https://github.com/martink-rsa/hacker-news/issues/1).
+
 ## Getting Started
 
 Simply clone the repo or copy the files to your computer.
