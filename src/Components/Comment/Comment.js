@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-
+import ReactHtmlParser, {
+  processNodes,
+  convertNodeToElement,
+  htmlparser2,
+} from 'react-html-parser';
 // MUI
 import Typography from '@material-ui/core/Typography';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Link from '@material-ui/core/Link';
+import Box from '@material-ui/core/Box';
 import Avatar from '@material-ui/core/Avatar';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ChatIcon from '@material-ui/icons/Chat';
 import DescriptionIcon from '@material-ui/icons/Description';
+const he = require('he');
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -22,18 +28,25 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function Story(props) {
+export default function Comment(props) {
   const classes = useStyles();
   const { index, differentBG } = props;
   const {
-    id,
+    objecID: id,
     url,
     title,
     date,
     points,
     author,
     num_comments: numComments,
+    comment_text: comment,
+    story_id: storyID,
+    story_title: storyTitle,
+    story_url: storyUrl,
   } = props.HNObj;
+
+  const [showMore, setShowMore] = useState(false);
+
   const regexUrl = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)/gim;
   // id={item.objectID}
   // url={
@@ -50,6 +63,17 @@ export default function Story(props) {
   // comments={item.num_comments}
   // isStory={item._tags[0] === 'story'}
 
+  function transform(node, index) {
+    if (node.type === 'tag' && node.name === 'pre') {
+      return null;
+    }
+  }
+
+  const parseOptions = {
+    decodeEntities: true,
+    transform: transform,
+  };
+
   return (
     <ListItem
       disableGutters
@@ -61,11 +85,14 @@ export default function Story(props) {
           // eslint-disable-next-line react/jsx-wrap-multilines
           <>
             <Typography noWrap>
-              <Link href={url} color="textPrimary">
-                {title}
+              <Link
+                href={`https://news.ycombinator.com/item?id=${storyID}`}
+                color="textPrimary"
+              >
+                [Thread]
               </Link>
-              <Link href={url} color="textSecondary">
-                {url ? `(${url.match(regexUrl)})` : null}
+              <Link href={storyUrl} color="textSecondary">
+                [Source] {storyTitle}
               </Link>
             </Typography>
           </>
@@ -73,15 +100,17 @@ export default function Story(props) {
         secondary={
           // eslint-disable-next-line react/jsx-wrap-multilines
           <>
+            <Box>{ReactHtmlParser(comment, parseOptions)}</Box>
+            {/* <Box>{he.decode(comment)}</Box> */}
             <Link
               color="textSecondary"
-              href={`https://news.ycombinator.com/item?id=${id}`}
+              href={`https://news.ycombinator.com/item?id=${storyID}`}
             >
               {`${moment(date).fromNow()} - `}
             </Link>
             <Link
               color="textSecondary"
-              href={`https://news.ycombinator.com/item?id=${id}`}
+              href={`https://news.ycombinator.com/item?id=${storyID}`}
             >
               {points === null ? '0' : `${points}`}
               {points === 1 ? ' point - ' : ' points - '}
@@ -94,7 +123,7 @@ export default function Story(props) {
             </Link>
             <Link
               color="textSecondary"
-              href={`https://news.ycombinator.com/item?id=${id}`}
+              href={`https://news.ycombinator.com/item?id=${storyID}`}
             >
               {numComments === null
                 ? ' - 0 comments - '
@@ -107,12 +136,12 @@ export default function Story(props) {
   );
 }
 
-Story.defaultProps = {
+Comment.defaultProps = {
   /*   points: null,
   comments: null, */
 };
 
-Story.propTypes = {
+Comment.propTypes = {
   /*   id: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,

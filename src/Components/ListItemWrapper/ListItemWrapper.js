@@ -33,6 +33,7 @@ export default function ArticleItem(props) {
     comments,
     isStory,
     differentBG,
+    children,
   } = props;
   const regexUrl = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)/gim;
 
@@ -42,74 +43,15 @@ export default function ArticleItem(props) {
       className={differentBG ? `${classes.even} ${classes.root}` : classes.root}
     >
       {index}
-      <ListItemText
-        primary={
-          // eslint-disable-next-line react/jsx-wrap-multilines
-          <>
-            <Typography noWrap>
-              <Link href={itemUrl} color="textPrimary">
-                {itemTitle}
-              </Link>
-              <Link href={itemUrl} color="textSecondary">
-                {itemUrl ? `(${itemUrl.match(regexUrl)})` : null}
-              </Link>
-            </Typography>
-          </>
-        }
-        secondary={
-          // eslint-disable-next-line react/jsx-wrap-multilines
-          <>
-            <Link
-              color="textSecondary"
-              href={`https://news.ycombinator.com/item?id=${itemID}`}
-            >
-              {`${date} - `}
-            </Link>
-            {isStory === true ? (
-              <Link
-                color="textSecondary"
-                href={`https://news.ycombinator.com/item?id=${itemID}`}
-              >
-                {points === null ? '0' : `${points}`}
-                {points === 1 ? ' point - ' : ' points - '}
-              </Link>
-            ) : null}
-            <Link
-              color="textSecondary"
-              href={`https://news.ycombinator.com/user?id=${author}`}
-            >
-              {author}
-            </Link>
-            {isStory === true ? (
-              <Link
-                color="textSecondary"
-                href={`https://news.ycombinator.com/item?id=${itemID}`}
-              >
-                {comments === null
-                  ? ' - 0 comments - '
-                  : ` - ${comments} comments`}
-              </Link>
-            ) : null}
-          </>
-        }
-      />
+      {children}
     </ListItem>
   );
 }
 
 ArticleItem.defaultProps = {
-  points: null,
-  comments: null,
+  //
 };
 
 ArticleItem.propTypes = {
-  itemID: PropTypes.string.isRequired,
-  itemUrl: PropTypes.string.isRequired,
-  itemTitle: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
-  points: PropTypes.number,
-  author: PropTypes.string.isRequired,
-  comments: PropTypes.number,
-  isStory: PropTypes.bool.isRequired,
-  differentBG: PropTypes.bool.isRequired,
+  //
 };
