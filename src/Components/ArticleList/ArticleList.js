@@ -8,12 +8,13 @@ import List from '@material-ui/core/List';
 import ArticleItem from '../ArticleItem/ArticleItem';
 
 export default function ArticleList(props) {
-  const { data } = props;
+  const { data, pages } = props;
   return (
     <List>
       {data.hits.map((item, index) => (
         <ArticleItem
           key={`sto-${Math.random() * 999}-${Math.random() * 999}`}
+          index={pages.current * pages.hitsPerPage + (index + 1)}
           itemID={item.objectID}
           itemUrl={
             item._tags[0] === 'story'

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import FormControl from '@material-ui/core/FormControl';
@@ -22,8 +22,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function SearchInput(props) {
   const classes = useStyles();
-  const { doFetch, query, setQuery, triggerSearch } = props;
-  const [searchInput, setSearchInput] = useState('React');
+  const { doFetch, query, setQuery, handleSearch } = props;
 
   return (
     <form
@@ -31,8 +30,7 @@ export default function SearchInput(props) {
       noValidate
       autoComplete="off"
       onSubmit={event => {
-        // doFetch(`https://hn.algolia.com/api/v1/search?query=${query}`);
-        setQuery(searchInput);
+        handleSearch(query);
         event.preventDefault();
       }}
     >
@@ -40,8 +38,8 @@ export default function SearchInput(props) {
         <InputLabel htmlFor="component-simple">Search Term</InputLabel>
         <Input
           id="component-simple"
-          value={searchInput}
-          onChange={event => setSearchInput(event.target.value)}
+          value={query}
+          onChange={event => setQuery(event.target.value)}
         />
       </FormControl>
       <Button type="submit" variant="contained" className={classes.formBtn}>
@@ -55,4 +53,5 @@ SearchInput.propTypes = {
   doFetch: PropTypes.func.isRequired,
   query: PropTypes.string.isRequired,
   setQuery: PropTypes.func.isRequired,
+  handleSearch: PropTypes.func.isRequired,
 };

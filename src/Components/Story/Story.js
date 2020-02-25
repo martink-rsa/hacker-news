@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function ArticleItem(props) {
+export default function Story(props) {
   const classes = useStyles();
   const {
     index,
@@ -97,12 +97,12 @@ export default function ArticleItem(props) {
   );
 }
 
-ArticleItem.defaultProps = {
+Story.defaultProps = {
   points: null,
   comments: null,
 };
 
-ArticleItem.propTypes = {
+Story.propTypes = {
   itemID: PropTypes.string.isRequired,
   itemUrl: PropTypes.string.isRequired,
   itemTitle: PropTypes.string.isRequired,
